@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://a.b.c:3306/employees
+    username: codingtest
+    password: 12abc!@
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults=false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false

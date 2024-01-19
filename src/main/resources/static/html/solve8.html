@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Q8</title>
+</head>
+<script src="../script/jquery-3.2.1.min.js"></script>
+<body>
+<a href="/">이전으로</a><br/>
+<div>
+    조세퍼스 순열
+    n: <input type="number" id="n" value="7"/>
+    m: <input type="number" id="m" value="3"/>
+</div>
+<div>
+    <button type="button" id="calc">계산</button>
+    result: <input style="width: 200px" type="text" readonly id="result"/>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#calc").click(function () {
+            $.ajax({
+                url: `http://localhost:8080/question8?n=${$("#n").val()}&m=${$("#m").val()}`,
+                type: "GET",
+                success: function (data) {
+                    $("#result").val(data);
+                }
+            });
+        });
+    });
+
+</script>
+</html>

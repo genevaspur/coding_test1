@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Q2</title>
+</head>
+<script src="../script/jquery-3.2.1.min.js"></script>
+<body>
+    <a href="/">이전으로</a><br/>
+    <input type="text" id="contents" />
+    <button id="sendRequest">Ping</button>
+    <pre id="history"></pre>
+</body>
+<script>
+    $(document).ready(function () {
+        var count = 1;
+        var ws = new WebSocket("ws://localhost:9090/question2");
+        ws.onopen = function () {
+            console.log("소켓 연결 성공");
+        };
+        $("#contents").keypress(function (e) {
+            if (e.keyCode == 13) {
+                sendRequest();
+            }
+        });
+        $("#sendRequest").click(function () {
+            sendRequest();
+        });
+        function sendRequest() {
+            if ($("#contents").val() == "") {
+                return;
+            }
+            console.log("소켓 메시지 전송");
+            ws.send($("#contents").val());
+            $("#history").html($("#history").html() + `Send: ${$("#contents").val()}` + `(${count++})\n`);
+            $("#contents").val("");
+        }
+        ws.onmessage = function (evt) {
+            console.log("소켓 메시지 수신");
+            $("#history").html($("#history").html() + evt.data + "\n");
+        };
+        ws.onclose = function () {
+            console.log("소켓 연결 종료");
+        };
+        ws.onerror = function (evt) {
+            console.log(evt.data);
+        };
+    });
+
+</script>
+</html>

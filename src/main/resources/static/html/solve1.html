@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q1</title>
+</head>
+<script src="../script/jquery-3.2.1.min.js"></script>
+<body>
+    <a href="/">이전으로</a>
+    <pre id="result">Loading...</pre>
+</body>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/question1",
+            type: "GET",
+            success: function (data) {
+                $("#result").html(data);
+
+            }
+        });
+    });
+</script>
+</html>

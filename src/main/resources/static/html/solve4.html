@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Q4</title>
+</head>
+<script src="../script/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<body>
+<a href="/">이전으로</a><br/>
+<table>
+    <tr>
+        <th></th>
+        <th>평균기온</th>
+        <th>평군습도</th>
+    </tr>
+    <tr>
+        <th>1월</th>
+        <td><input type="number" id="t1" value="3"/></td>
+        <td><input type="number" id="h1" value="40"/></td>
+    </tr>
+    <tr>
+        <th>2월</th>
+        <td><input type="number" id="t2" value="8"/></td>
+        <td><input type="number" id="h2" value="48"/></td>
+    </tr>
+    <tr>
+        <th>3월</th>
+        <td><input type="number" id="t3" value="13"/></td>
+        <td><input type="number" id="h3" value="54"/></td>
+    </tr>
+    <tr>
+        <th>4월</th>
+        <td><input type="number" id="t4" value="15"/></td>
+        <td><input type="number" id="h4" value="59"/></td>
+    </tr>
+    <tr>
+        <th>5월</th>
+        <td><input type="number" id="t5" value="19"/></td>
+        <td><input type="number" id="h5" value="64"/></td>
+    </tr>
+    <tr>
+        <th>6월</th>
+        <td><input type="number" id="t6" value="22"/></td>
+        <td><input type="number" id="h6" value="68"/></td>
+    </tr>
+    <tr>
+        <th>7월</th>
+        <td><input type="number" id="t7" value="26"/></td>
+        <td><input type="number" id="h7" value="79"/></td>
+    </tr>
+    <tr>
+        <th>8월</th>
+        <td><input type="number" id="t8" value="30"/></td>
+        <td><input type="number" id="h8" value="84"/></td>
+    </tr>
+    <tr>
+        <th>9월</th>
+        <td><input type="number" id="t9" value="24"/></td>
+        <td><input type="number" id="h9" value="75"/></td>
+    </tr>
+    <tr>
+        <th>10월</th>
+        <td><input type="number" id="t10" value="18"/></td>
+        <td><input type="number" id="h10" value="68"/></td>
+    </tr>
+    <tr>
+        <th>11월</th>
+        <td><input type="number" id="t11" value="9"/></td>
+        <td><input type="number" id="h11" value="52"/></td>
+    </tr>
+    <tr>
+        <th>12월</th>
+        <td><input type="number" id="t12" value="2"/></td>
+        <td><input type="number" id="h12" value="42"/></td>
+    </tr>
+</table>
+<button type="button" id="randomButton">Random</button>
+<div id="chart" style="max-width: 650px; margin: 35px auto">
+</div>
+</body>
+<script>
+
+    $(document).ready(function () {
+
+        $("input").on("keyup change", function () {
+            chart.updateOptions({
+                series: [
+                    {
+                        data: updateT(),
+                    },
+                    {
+                        data: updateH(),
+                    }
+                ],
+            });
+        });
+
+        function updateT() {
+            var _tArr = [];
+            for (var i = 1; i <= 12; i++) {
+                _tArr.push($("#t" + i).val());
+            }
+            return _tArr;
+        }
+
+        function updateH() {
+            var _hArr = [];
+            for (var i = 1; i <= 12; i++) {
+                _hArr.push($("#h" + i).val());
+            }
+            return _hArr;
+        }
+
+        var options = {
+            series: [
+                {
+                    name: "평균기온",
+                    data: updateT(),
+                },
+                {
+                    name: "평균습도",
+                    data: updateH(),
+                }
+            ],
+            chart: {
+                height: 350,
+                type: 'line',
+                dropShadow: {
+                    enabled: true,
+                    color: '#000',
+                    top: 18,
+                    left: 7,
+                    blur: 10,
+                    opacity: 0.2
+                },
+                toolbar: {
+                    show: false
+                }
+            },
+            colors: ['#0256ff', '#ee1010'],
+            dataLabels: {
+                enabled: true,
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            title: {
+                text: 'CodingTest',
+                align: 'left'
+            },
+            grid: {
+                borderColor: '#e7e7e7',
+                row: {
+                    colors: ['#f3f3f3', 'transparent'],
+                    opacity: 0.5
+                },
+            },
+            markers: {
+                size: 1
+            },
+            xaxis: {
+                categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            },
+            yaxis: [
+                {
+                    title: {
+                        text: '평균기온',
+                    },
+                    min: 0,
+                    max: 40,
+                },
+                {
+                    opposite: true,
+                    title: {
+                        text: '평균습도',
+                    },
+                    min: 0,
+                    max: 100,
+                }
+            ],
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+        $("#randomButton").click(function () {
+            for (var i = 1; i <= 12; i++) {
+                $("#t" + i).val(Math.floor(Math.random() * 40));
+                $("#h" + i).val(Math.floor(Math.random() * 100));
+            }
+            chart.updateOptions({
+                series: [
+                    {
+                        data: updateT(),
+                    },
+                    {
+                        data: updateH(),
+                    }
+                ],
+            });
+        });
+
+    });
+
+</script>
+</html>

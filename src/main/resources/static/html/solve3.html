@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Q3</title>
+</head>
+<script src="../script/jquery-3.2.1.min.js"></script>
+<body>
+    <a href="/">이전으로</a><br/>
+    <table id="tbl">
+        <tr>
+            <th>emp_no</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>gender</th>
+            <th>hire_date</th>
+            <th>dept_name</th>
+            <th>title</th>
+            <th>max_salary</th>
+        </tr>
+    </table>
+</body>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/question3",
+            type: "GET",
+            success: function (data) {
+                for (var i in data) {
+                    var item = data[i];
+                    var tr = $(`<tr><td>${item.empNo}</td><td>${item.firstName}</td><td>${item.lastName}</td><td>${item.gender}</td><td>${item.hireDate}</td><td>${item.deptName}</td><td>${item.title}</td><td>${item.maxSalary}</td></tr>`);
+                    $("#tbl").append(tr);
+                }
+            }
+        });
+
+    });
+
+</script>
+</html>

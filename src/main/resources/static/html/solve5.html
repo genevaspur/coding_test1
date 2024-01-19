@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Q5</title>
+</head>
+<script src="../script/jquery-3.2.1.min.js"></script>
+<body>
+    <a href="/">이전으로</a><br/>
+    <pre id="result"></pre>
+</body>
+<script>
+    $(document).ready(function () {
+        var totalCount = 0;
+        $.ajax({
+            url: "http://localhost:8080/question5",
+            type: "GET",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    totalCount += data[i].count;
+                    $("#result").append(`Count: ${data[i].count} {"id": ${data[i].item.id}, "quote": "${data[i].item.quote}"}<br/>`);
+                }
+                $("#result").append(`Total Count : ${totalCount}`);
+            }
+        });
+    });
+
+</script>
+</html>
